@@ -25,10 +25,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: compile llvm
-        run: docker build .  --build-arg "VERSION=${{ github.event.inputs.version }}" --build-arg "BUILD_TYPE=${{ github.event.inputs.build_type }}" --tag llvm-build:${{ github.event.inputs.version }}
+        run: docker build .  --build-arg "VERSION=${{ github.event.inputs.version }}" --build-arg "BUILD_TYPE=${{ github.event.inputs.build_type }}" --tag llvm-build
 
       - name: push image
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/llvm-build
-          docker push $IMAGE_ID:${{ github.event.inputs.version }}
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/llvm-build:${{ github.event.inputs.version }}
+          docker tag llvm-build $IMAGE_ID
+          docker push $IMAGE_ID

@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ARG VERSION=18.3.1
+ARG VERSION=18.1.3
 ARG BUILD_TYPE=Release
 
 RUN apt-get clean && apt-get update && apt-get install -y \
