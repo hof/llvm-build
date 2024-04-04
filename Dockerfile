@@ -14,7 +14,6 @@ RUN cd llvm-project && cmake -S llvm -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lldb;lld;polly" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
-    -DLLVM_ENABLE_ASSERTIONS=ON \
     -DLLVM_TARGETS_TO_BUILD="X86" \
     -DLLVM_USE_LINKER=lld
 
