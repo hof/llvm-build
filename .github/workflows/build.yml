@@ -1,0 +1,24 @@
+name: llvm-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'version to build (eg. 18.1.3)'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: compile llvm
+        run: docker build .  --build-arg "VERSION=${{ github.event.inputs.tag }}" --tag llvm-build:${{ github.event.inputs.tag }}
+
+      - name: push image
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          docker push llvm-build:${{ github.event.inputs.tag }}
