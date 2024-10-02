@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM debian:bookworm-slim as builder
 
 ARG VERSION=18.1.3
 ARG BUILD_TYPE=Release
@@ -18,3 +18,10 @@ RUN cd llvm-project && cmake -S llvm -B build -G Ninja \
     -DLLVM_USE_LINKER=lld
 
 RUN cd llvm-project && cmake --build build --target install
+
+FROM debian:bookworm-slim
+
+RUN apt-get clean && apt-get update && apt-get install -y \
+    git cmake ninja-build
+
+COPY --from=builder /usr/local /usr/local
