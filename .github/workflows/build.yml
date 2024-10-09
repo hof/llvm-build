@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'version to build (eg. 18.1.3)'
+        description: 'LLVM version to build (eg. 18.1.3)'
         required: true
       build_type:
         description: 'build type'
